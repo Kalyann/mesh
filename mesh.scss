@@ -1,0 +1,112 @@
+//grid variables
+$grid-cols: 12;
+$base-col-width: 100% / $grid-cols;
+$sm-breakpoint: 42rem;
+$md-breakpoint: 64rem;
+$max-width: 70rem;
+$gutter-width: 1rem;
+$i: 1;
+//grid variables end here
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+//grid mixin
+@mixin grid($size){
+
+	@for $i from 1 through $grid-cols{
+    	.#{$size}-#{$i}{
+    		float: left;
+    		width: #{$base-col-width * $i};
+    	}
+	}
+	@for $i from 1 through $grid-cols - 1{
+    	.#{$size}-push-#{$i}{
+    		position: relative;
+    		left: #{$base-col-width * $i};
+    	}
+	}
+	@for $i from 1 through $grid-cols - 1{
+    	.#{$size}-pull-#{$i}{
+	    	position: relative;
+    		left: -#{$base-col-width * $i};
+    	}
+	}
+	@for $i from 1 through $grid-cols{
+		.#{$size}-offset-#{$i}{
+			float: left;
+			margin-left: #{$base-col-width * $i};
+		}
+	}
+}
+//grid mixin ends here
+
+
+.container {
+	max-width: $max-width;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+.row::before, .row::after {
+	content: ' ';
+	display: table;
+}
+.row::after {
+	clear: both;
+}
+.row .row {
+	margin-left: -$gutter-width;
+	margin-right: -$gutter-width;
+}
+
+[class*='col-'] {
+  min-height: 1px;
+  width: 100%;
+  padding-left: $gutter-width;
+  padding-right: $gutter-width;
+  display: block;
+  position: relative;
+  float: left;
+}
+
+.container-fluid {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.row-no-gutter {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+	[class*='col-'] {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+
+@include grid('col-sm');
+
+
+
+@media screen and (min-width: $sm-breakpoint) {
+	@include grid('col-md');
+	.flow--opposite--md{
+		float: right !important;
+	}
+}
+
+@media screen and (min-width: $md-breakpoint) {
+	@include grid('col-lg');
+	.flow--opposite--lg{
+		float: right;
+	}
+}
