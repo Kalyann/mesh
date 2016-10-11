@@ -99,14 +99,8 @@ $i: 1;
 
 @media screen and (min-width: $sm-breakpoint) {
 	@include grid('col-md');
-	.flow--opposite--md{
-		float: right !important;
-	}
 }
 
 @media screen and (min-width: $md-breakpoint) {
 	@include grid('col-lg');
-	.flow--opposite--lg{
-		float: right;
-	}
 }
