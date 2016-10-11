@@ -1,13 +1,13 @@
 //grid variables
-$grid-cols: 12;
-$base-col-width: 100% / $grid-cols;
-$sm-breakpoint: 42rem;
-$md-breakpoint: 64rem;
-$max-width: 70rem;
-$gutter-width: 1rem;
-$i: 1;
+$grid-cols: 12;//number of columns in the grid
+$base-col-width: 100% / $grid-cols;//width of one column
+$sm-breakpoint: 42rem;//devices smaller than 42rem are taken to be small
+$md-breakpoint: 64rem;//devices smaller than 64rem but greater than 42rem are taken to be medium
+$max-width: 70rem;//maximum width of grid
+$gutter-width: 1rem;//space between columns
 //grid variables end here
 
+//resets
 *,
 *:before,
 *:after {
@@ -15,6 +15,9 @@ $i: 1;
 	margin: 0;
 	padding: 0;
 }
+//resets end here
+
+
 //grid mixin
 @mixin grid($size){
 
@@ -22,18 +25,6 @@ $i: 1;
     	.#{$size}-#{$i}{
     		float: left;
     		width: #{$base-col-width * $i};
-    	}
-	}
-	@for $i from 1 through $grid-cols - 1{
-    	.#{$size}-push-#{$i}{
-    		position: relative;
-    		left: #{$base-col-width * $i};
-    	}
-	}
-	@for $i from 1 through $grid-cols - 1{
-    	.#{$size}-pull-#{$i}{
-	    	position: relative;
-    		left: -#{$base-col-width * $i};
     	}
 	}
 	@for $i from 1 through $grid-cols{
@@ -52,16 +43,16 @@ $i: 1;
 	margin-right: auto;
 	display: block;
 }
-.row::before, .row::after {
-	content: ' ';
-	display: table;
-}
-.row::after {
-	clear: both;
-}
-.row .row {
-	margin-left: -$gutter-width;
-	margin-right: -$gutter-width;
+.row {
+	.row {
+		margin-left: -$gutter-width;
+		margin-right: -$gutter-width;
+	}
+	&::before, &::after {
+		content: ' ';
+		display: table;
+		clear: both;
+	}
 }
 
 [class*='col-'] {
@@ -94,8 +85,6 @@ $i: 1;
 
 
 @include grid('col-sm');
-
-
 
 @media screen and (min-width: $sm-breakpoint) {
 	@include grid('col-md');
